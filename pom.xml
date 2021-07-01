@@ -12,6 +12,14 @@
     </parent>
 
     <modules>
+        <module>graphql-engine</module>
+        <module>graphql-provider-remote</module>
+        <module>graphql-register</module>
+        <module>graphql-provider-inner</module>
+        <module>graphql-register-redis</module>
+        <module>demo-engine</module>
+        <module>demo-article</module>
+        <module>graphql-provider-remote-redis</module>
     </modules>
 
     <groupId>com.github.caijh.apps.graphql</groupId>
@@ -21,6 +29,7 @@
 
     <properties>
         <duo-graphql.version>${project.version}</duo-graphql.version>
+        <graphql-java.version>13.0</graphql-java.version>
         <dockerfile.skip>true</dockerfile.skip>
     </properties>
 
@@ -33,5 +42,40 @@
             </snapshots>
         </repository>
     </repositories>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.caijh.apps.graphql</groupId>
+                <artifactId>graphql-provider-inner</artifactId>
+                <version>${duo-graphql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.caijh.apps.graphql</groupId>
+                <artifactId>graphql-provider-remote</artifactId>
+                <version>${duo-graphql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.caijh.apps.graphql</groupId>
+                <artifactId>graphql-provider-remote-redis</artifactId>
+                <version>${duo-graphql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.caijh.apps.graphql</groupId>
+                <artifactId>graphql-register</artifactId>
+                <version>${duo-graphql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.caijh.apps.graphql</groupId>
+                <artifactId>graphql-register-redis</artifactId>
+                <version>${duo-graphql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.github.caijh.apps.graphql</groupId>
+                <artifactId>graphql-engine</artifactId>
+                <version>${duo-graphql.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
 </project>
