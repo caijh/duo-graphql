@@ -13,13 +13,13 @@
 
     <modules>
         <module>graphql-engine</module>
-        <module>graphql-provider-remote</module>
-        <module>graphql-register</module>
         <module>graphql-provider-inner</module>
+        <module>graphql-provider-remote</module>
+        <module>graphql-provider-remote-redis</module>
+        <module>graphql-register</module>
         <module>graphql-register-redis</module>
         <module>demo-engine</module>
         <module>demo-article</module>
-        <module>graphql-provider-remote-redis</module>
     </modules>
 
     <groupId>com.github.caijh.apps.graphql</groupId>
