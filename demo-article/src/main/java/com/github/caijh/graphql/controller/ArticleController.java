@@ -3,6 +3,7 @@ package com.github.caijh.graphql.controller;
 import java.util.List;
 import java.util.Set;
 
+import com.github.caijh.framework.web.controller.BaseController;
 import com.github.caijh.graphql.dto.req.ArticleQuery;
 import com.github.caijh.graphql.dto.req.ArticleSave;
 import com.github.caijh.graphql.dto.resp.Article;
@@ -26,18 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author xuwenzhen
- * @chapter 资讯模块
- * @section 文章
- * @date 2019/10/12
- */
 @RestController
 @GraphqlModule("article")
 //可选，声明当前的领域，如果与配置中的graphql.schema.module值一致，则可以省略，一个GraphQL Provider允许实现多个领域，这也是为了在项目之初某些领域比较小时，先寄放在其它项目里面，可选
 @RequestMapping("/api/article")
 @SchemaProvider(clazz = Article.class, ids = {"articleId", "wzId"}) //声明为标准视图，并向外注册了这两个外键
-public class ArticleController {
+public class ArticleController extends BaseController {
 
     @Autowired
     private ArticleService articleService;

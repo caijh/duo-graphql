@@ -9,7 +9,6 @@ import com.github.caijh.graphql.provider.GraphqlProviderException;
 import com.github.caijh.graphql.provider.dto.TpDocGraphqlProviderServiceInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.dao.DataAccessException;
 import org.springframework.data.redis.core.HashOperations;
@@ -20,7 +19,7 @@ import org.springframework.util.StringUtils;
 
 /**
  * @author xuwenzhen
- * @date 2019/9/8
+ * @since 2019/9/8
  */
 @Component
 public class RedisBaseProviderRegistry extends BaseProviderRegistry {
@@ -33,16 +32,12 @@ public class RedisBaseProviderRegistry extends BaseProviderRegistry {
 
     /**
      * Graphql Redis注册器路径
-     *
-     * @demo graphql:apps
      */
     @Value("${graphql.registry.redis:graphql}")
     private String redisRegistryPath;
 
     /**
      * api接口文档名称
-     *
-     * @demo api.json
      */
     @Value("${graphql.api.doc:api.json}")
     protected String apiDocName;
@@ -50,7 +45,7 @@ public class RedisBaseProviderRegistry extends BaseProviderRegistry {
     @Inject
     private Redis redis;
 
-    @Autowired
+    @Inject
     private RedisMessagePublisher redisMessagePublisher;
 
     @PostConstruct

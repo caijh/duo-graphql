@@ -3,8 +3,8 @@ package com.github.caijh.graphql.provider;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,10 +31,10 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 
 /**
- * base grapqhl registry
+ * base graphql registry
  *
  * @author xuwenzhen
- * @date 2019/9/8
+ * @since 2019/9/8
  */
 public abstract class BaseProviderRegistry {
 
@@ -46,32 +46,24 @@ public abstract class BaseProviderRegistry {
 
     /**
      * 当前服务提供的服务领域名称（为了方便，尽量简写，比如Xf / Esf / Agent...）
-     *
-     * @demo Xf
      */
     @Value("${graphql.schema.module:}")
     private String schemaModuleName;
 
     /**
      * 指定GraphQL Schema的名称
-     *
-     * @demo cp
      */
     @Value("${graphql.schema.name:}")
     private String schemaName;
 
     /**
      * 当前服务的调用地址，用于Graphql引擎DataProvider调用本服务接口
-     *
-     * @demo http://web-mesh-gw
      */
     @Value("${application.server:}")
     private String server;
 
     /**
      * 当前服务名称，需要与Mesh网格一致
-     *
-     * @demo house.graphql.duo
      */
     @Value("${spring.application.name:}")
     private String applicationName;
@@ -91,22 +83,16 @@ public abstract class BaseProviderRegistry {
         if (commitId == null || commitId.length() == 0) {
             throw new GraphqlProviderException("读取Git信息文件失败！git.commit.id为空！");
         }
+
+        if (StringUtils.isEmpty(this.schemaModuleName)) {
+            throw new GraphqlProviderException("作为GraphQL数据供应端，graphql.schema.module不能为空！");
+        }
     }
 
     protected TpDocGraphqlProviderServiceInfo getTpDocGraphqlProviderServiceInfo() {
-        String commitId = this.getCommitId();
-        if (commitId == null || commitId.length() == 0) {
-            throw new GraphqlProviderException("读取Git信息文件失败！git.commit.id为空！");
-        }
-
-        if (StringUtils.isEmpty(this.schemaModuleName)) {
-            logger.error("作为GraphQL数据供应端，graphql.schema.module不能为空！");
-            return null;
-        }
-
         TpDocGraphqlProviderServiceInfo provider = new TpDocGraphqlProviderServiceInfo();
         provider.setAppId(this.applicationName);
-        provider.setVcsId(commitId);
+        provider.setVcsId(this.getCommitId());
         provider.setModuleName(this.schemaModuleName);
         provider.setServer(this.server);
         provider.setSchemaName(this.schemaName);
@@ -115,7 +101,7 @@ public abstract class BaseProviderRegistry {
         Map<String, Object> beans = this.applicationContext.getBeansWithAnnotation(SchemaProvider.class);
         if (!beans.isEmpty()) {
             for (Map.Entry<String, Object> entry : beans.entrySet()) {
-                ProviderModelInfo modelInfo = this.getProvidModelInfo(entry);
+                ProviderModelInfo modelInfo = this.getProviderModelInfo(entry);
                 if (modelInfo != null) {
                     models.add(modelInfo);
                 }
@@ -151,7 +137,7 @@ public abstract class BaseProviderRegistry {
         }
     }
 
-    private ProviderModelInfo getProvidModelInfo(Map.Entry<String, Object> entry) {
+    private ProviderModelInfo getProviderModelInfo(Map.Entry<String, Object> entry) {
         Object providerObj = entry.getValue();
         Class<?> controllerClass = providerObj.getClass();
         SchemaProvider schemaProvider = controllerClass.getAnnotation(SchemaProvider.class);
@@ -214,13 +200,8 @@ public abstract class BaseProviderRegistry {
     protected String readResourceString(String resourceName) {
         try (InputStream is = this.getClass().getClassLoader().getResourceAsStream(resourceName)) {
             if (is != null) {
-                BufferedReader reader;
-                try {
-                    reader = new BufferedReader(new InputStreamReader(is, CHARSET_NAME));
-                } catch (UnsupportedEncodingException e) {
-                    throw new GraphqlProviderException("读取资源文件" + resourceName + "失败！", e);
-                }
-                return reader.lines().collect(Collectors.joining(System.lineSeparator()));
+                return new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8)).lines()
+                                                                                            .collect(Collectors.joining(System.lineSeparator()));
             }
         } catch (Exception e) {
             throw new GraphqlProviderException("读取资源" + resourceName + "文件失败！", e);
