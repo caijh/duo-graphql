@@ -1,1 +1,1 @@
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.caijh.graphql.provider.redis.GraphqlProviderRemoteRedisAutoconfiguration
+org.springframework.boot.autoconfigure.EnableAutoConfiguration=com.github.caijh.graphql.provider.redis.GraphqlProviderRemoteRedisAutoConfiguration

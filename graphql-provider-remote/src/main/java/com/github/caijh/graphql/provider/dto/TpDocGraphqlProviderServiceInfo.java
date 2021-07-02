@@ -7,34 +7,27 @@ import java.util.Map;
  * Duo-Doc项目的接入请求
  *
  * @author xuwenzhen
- * @date 2019/4/16
+ * @since 2019/4/16
  */
 public class TpDocGraphqlProviderServiceInfo {
+
     /**
      * Superdiamond 或 MeshService上的名称
-     *
-     * @demo house.graphql.duo
      */
     private String appId;
 
     /**
      * 版本ID，比如commitId
-     *
-     * @demo 17dd3706831f4dc183c8733ae197a1e74c2c53a4
      */
     private String vcsId;
 
     /**
      * Schema中的领域名称
-     *
-     * @demo xf
      */
     private String moduleName;
 
     /**
      * 服务端地址，如果未设置，会使用全局的地址代替
-     *
-     * @demo http://127.0.0.1:123456
      */
     private String server;
 
@@ -56,7 +49,7 @@ public class TpDocGraphqlProviderServiceInfo {
     private String schemaName;
 
     public String getAppId() {
-        return appId;
+        return this.appId;
     }
 
     public void setAppId(String appId) {
@@ -64,7 +57,7 @@ public class TpDocGraphqlProviderServiceInfo {
     }
 
     public String getVcsId() {
-        return vcsId;
+        return this.vcsId;
     }
 
     public void setVcsId(String vcsId) {
@@ -72,7 +65,7 @@ public class TpDocGraphqlProviderServiceInfo {
     }
 
     public String getServer() {
-        return server;
+        return this.server;
     }
 
     public void setServer(String server) {
@@ -80,7 +73,7 @@ public class TpDocGraphqlProviderServiceInfo {
     }
 
     public String getModuleName() {
-        return moduleName;
+        return this.moduleName;
     }
 
     public void setModuleName(String moduleName) {
@@ -88,7 +81,7 @@ public class TpDocGraphqlProviderServiceInfo {
     }
 
     public List<ProviderModelInfo> getModels() {
-        return models;
+        return this.models;
     }
 
     public void setModels(List<ProviderModelInfo> models) {
@@ -96,7 +89,7 @@ public class TpDocGraphqlProviderServiceInfo {
     }
 
     public Map<String, String> getModuleMap() {
-        return moduleMap;
+        return this.moduleMap;
     }
 
     public void setModuleMap(Map<String, String> moduleMap) {
@@ -104,7 +97,7 @@ public class TpDocGraphqlProviderServiceInfo {
     }
 
     public String getSchemaName() {
-        return schemaName;
+        return this.schemaName;
     }
 
     public void setSchemaName(String schemaName) {
@@ -120,29 +113,29 @@ public class TpDocGraphqlProviderServiceInfo {
     public String toString() {
         StringBuilder sb = new StringBuilder();
         sb
-                .append("{\"appId\":").append(appId == null ? "null" : "\"" + appId + "\"")
-                .append(",\"vcsId\":").append(vcsId == null ? "null" : "\"" + vcsId + "\"")
-                .append(",\"moduleName\":").append(moduleName == null ? "null" : "\"" + moduleName + "\"")
-                .append(",\"server\":").append(server == null ? "null" : "\"" + server + "\"")
-                .append(",\"schemaName\":").append(schemaName == null ? "null" : "\"" + schemaName + "\"")
+                .append("{\"appId\":").append(this.appId == null ? "null" : "\"" + this.appId + "\"")
+                .append(",\"vcsId\":").append(this.vcsId == null ? "null" : "\"" + this.vcsId + "\"")
+                .append(",\"moduleName\":").append(this.moduleName == null ? "null" : "\"" + this.moduleName + "\"")
+                .append(",\"server\":").append(this.server == null ? "null" : "\"" + this.server + "\"")
+                .append(",\"schemaName\":").append(this.schemaName == null ? "null" : "\"" + this.schemaName + "\"")
                 .append(",\"models\":[");
-        if (models != null && !models.isEmpty()) {
-            for (int i = 0; i < models.size(); i++) {
-                ProviderModelInfo model = models.get(i);
+        if (this.models != null && !this.models.isEmpty()) {
+            for (int i = 0; i < this.models.size(); i++) {
+                ProviderModelInfo model = this.models.get(i);
                 sb.append(model.toString());
-                if (i < models.size() - 1) {
+                if (i < this.models.size() - 1) {
                     sb.append(",");
                 }
             }
         }
         sb.append("]");
-        if (moduleMap != null && !moduleMap.isEmpty()) {
+        if (this.moduleMap != null && !this.moduleMap.isEmpty()) {
             sb.append(",\"moduleMap\":{");
-            moduleMap.entrySet().forEach(entry -> {
+            this.moduleMap.forEach((key, value) -> {
                 sb.append("\"");
-                sb.append(entry.getKey());
+                sb.append(key);
                 sb.append("\":\"");
-                sb.append(entry.getValue());
+                sb.append(value);
                 sb.append("\",");
             });
             sb.deleteCharAt(sb.length() - 1);
@@ -151,4 +144,5 @@ public class TpDocGraphqlProviderServiceInfo {
         sb.append("}");
         return sb.toString();
     }
+
 }
