@@ -18,8 +18,6 @@
         <module>graphql-provider-remote-redis</module>
         <module>graphql-register</module>
         <module>graphql-register-redis</module>
-        <module>demo-engine</module>
-        <module>demo-article</module>
     </modules>
 
     <groupId>com.github.caijh.apps.graphql</groupId>
@@ -32,6 +30,13 @@
         <graphql-java.version>13.0</graphql-java.version>
         <dockerfile.skip>true</dockerfile.skip>
     </properties>
+
+    <scm>
+        <connection>git@github.com:caijh/duo-graphql.git</connection>
+        <developerConnection>git@github.com:caijh/duo-graphql.git</developerConnection>
+        <url>git@github.com:caijh/framework.git</url>
+        <tag>HEAD</tag>
+    </scm>
 
     <repositories>
         <repository>
@@ -77,5 +82,90 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-release-plugin</artifactId>
+                <version>2.5.3</version>
+                <configuration>
+                    <useReleaseProfile>false</useReleaseProfile>
+                    <autoVersionSubmodules>true</autoVersionSubmodules>
+                    <arguments>-DskipTests -P rdc,release</arguments>
+                    <scmCommentPrefix>release</scmCommentPrefix>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+    <profiles>
+        <profile>
+            <id>release</id>
+            <properties>
+                <gpg.executable>gpg</gpg.executable>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>3.1.0</version>
+                        <executions>
+                            <execution>
+                                <phase>package</phase>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>3.3.0</version>
+                        <configuration>
+                            <show>private</show>
+                            <nohelp>true</nohelp>
+                        </configuration>
+                    </plugin>
+                    <!-- GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>1.6</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                                <configuration>
+                                    <gpgArguments>
+                                        <arg>--pinentry-mode</arg>
+                                        <arg>loopback</arg>
+                                    </gpgArguments>
+                                </configuration>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+
+            <distributionManagement>
+                <repository>
+                    <id>rdc-releases</id>
+                    <url>https://packages.aliyun.com/maven/repository/2120496-release-BAJ2HE/</url>
+                </repository>
+                <snapshotRepository>
+                    <id>rdc-snapshots</id>
+                    <url>https://packages.aliyun.com/maven/repository/2120496-snapshot-Not6tP/</url>
+                </snapshotRepository>
+            </distributionManagement>
+        </profile>
+    </profiles>
 
 </project>

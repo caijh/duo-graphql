@@ -4,7 +4,7 @@ package com.github.caijh.graphql.dto;
  * 服务端信息，包括：schema / dataProvider信息等
  *
  * @author xuwenzhen
- * @date 2019/4/2
+ * @since 2019/4/2
  */
 public class GraphQLServiceDto {
 
