@@ -3,15 +3,13 @@ package com.github.caijh.graphql.register.config;
 import java.util.Map;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.stereotype.Component;
 
 /**
  * @author xuwenzhen
- * @date 2019/4/2
+ * @since 2019/4/2
  */
 @Component
-@ComponentScan(basePackages = "com.github.caijh.graphql")
 @ConfigurationProperties(prefix = "duo.graphql.register")
 public class GraphqlRegisterConfigure {
 

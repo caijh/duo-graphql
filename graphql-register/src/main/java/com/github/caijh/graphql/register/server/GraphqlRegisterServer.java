@@ -4,7 +4,7 @@ package com.github.caijh.graphql.register.server;
  * 服务schema / query 加载器
  *
  * @author xuwenzhen
- * @date 2019/4/3
+ * @since 2019/4/3
  */
 public interface GraphqlRegisterServer {
 

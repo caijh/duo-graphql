@@ -6,7 +6,7 @@ import java.util.List;
  * GraphQL注册中心注册器
  *
  * @author xuwenzhen
- * @date 2019/4/2
+ * @since 2019/4/2
  */
 public interface GraphqlRegister<T> {
 

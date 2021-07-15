@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author xuwenzhen
- * @date 2019/4/2
+ * @since 2019/4/2
  */
 @Component
 @ConfigurationProperties(prefix = "duo.graphql.server")

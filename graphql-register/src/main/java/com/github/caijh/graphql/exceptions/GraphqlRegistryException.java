@@ -4,7 +4,7 @@ package com.github.caijh.graphql.exceptions;
  * GraphQL Registry Exception
  *
  * @author xuwenzhen
- * @date 2019/4/2
+ * @since 2019/4/2
  */
 public class GraphqlRegistryException extends RuntimeException {
 
